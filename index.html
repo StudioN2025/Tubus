@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Простой браузер | Google/Yandex</title>
+    <title>TUBUS - Простой браузер</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -21,15 +21,45 @@
         }
 
         .browser-container {
-            width: 90%;
-            max-width: 1200px;
-            height: 90vh;
+            width: 95%;
+            max-width: 1400px;
+            height: 95vh;
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
             display: flex;
             flex-direction: column;
+        }
+
+        /* Шапка с названием */
+        .browser-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .browser-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .browser-logo h1 {
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .browser-logo span {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
         }
 
         /* Панель инструментов */
@@ -45,16 +75,20 @@
 
         .nav-buttons {
             display: flex;
-            gap: 10px;
+            gap: 5px;
+            background: white;
+            padding: 5px;
+            border-radius: 25px;
+            border: 1px solid #dee2e6;
         }
 
         .nav-btn {
             background: none;
             border: none;
-            font-size: 20px;
+            font-size: 18px;
             cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 8px;
+            padding: 8px 15px;
+            border-radius: 20px;
             color: #495057;
             transition: all 0.3s;
         }
@@ -65,7 +99,7 @@
         }
 
         .nav-btn:disabled {
-            opacity: 0.5;
+            opacity: 0.3;
             cursor: not-allowed;
         }
 
@@ -82,8 +116,8 @@
         }
 
         .address-bar:focus-within {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #4ecdc4;
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
         }
 
         #url-input {
@@ -100,7 +134,7 @@
             border: none;
             font-size: 18px;
             cursor: pointer;
-            color: #667eea;
+            color: #4ecdc4;
             padding: 8px;
             border-radius: 50%;
             transition: all 0.3s;
@@ -108,16 +142,17 @@
 
         #go-btn:hover {
             background: #f0f2f5;
+            transform: scale(1.1);
         }
 
         /* Поисковые системы */
         .search-engines {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             background: white;
             padding: 5px;
             border-radius: 25px;
-            border: 2px solid #e9ecef;
+            border: 1px solid #dee2e6;
         }
 
         .search-engine {
@@ -128,6 +163,7 @@
             font-weight: 600;
             transition: all 0.3s;
             color: white;
+            font-size: 14px;
         }
 
         .search-engine.google {
@@ -149,7 +185,7 @@
         }
 
         .search-engine.active {
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.5);
         }
 
         /* Панель закладок */
@@ -158,7 +194,7 @@
             padding: 10px 20px;
             border-bottom: 1px solid #dee2e6;
             display: flex;
-            gap: 15px;
+            gap: 10px;
             align-items: center;
             overflow-x: auto;
         }
@@ -166,48 +202,54 @@
         .bookmark {
             display: flex;
             align-items: center;
-            gap: 5px;
-            padding: 5px 12px;
+            gap: 8px;
+            padding: 6px 15px;
             background: #f8f9fa;
-            border-radius: 15px;
+            border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s;
             white-space: nowrap;
+            border: 1px solid #dee2e6;
         }
 
         .bookmark:hover {
             background: #e9ecef;
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         .bookmark.google {
             background: #4285f4;
             color: white;
+            border: none;
         }
 
         .bookmark.yandex {
             background: #ff0000;
             color: white;
+            border: none;
         }
 
         .bookmark-icon {
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .add-bookmark {
             background: none;
             border: 2px dashed #ced4da;
-            padding: 5px 15px;
-            border-radius: 15px;
+            padding: 6px 15px;
+            border-radius: 20px;
             cursor: pointer;
             color: #6c757d;
             transition: all 0.3s;
             white-space: nowrap;
+            font-size: 14px;
         }
 
         .add-bookmark:hover {
-            border-color: #667eea;
-            color: #667eea;
+            border-color: #4ecdc4;
+            color: #4ecdc4;
+            background: #f8f9fa;
         }
 
         /* Область просмотра */
@@ -221,7 +263,6 @@
             width: 100%;
             height: 100%;
             border: none;
-            background: white;
         }
 
         /* Статус бар */
@@ -235,8 +276,13 @@
             font-size: 12px;
         }
 
+        .status-left {
+            display: flex;
+            gap: 20px;
+        }
+
         .loading {
-            color: #667eea;
+            color: #4ecdc4;
             display: none;
         }
 
@@ -244,7 +290,7 @@
             display: inline;
         }
 
-        /* Модальное окно для добавления закладки */
+        /* Модальное окно */
         .modal {
             display: none;
             position: fixed;
@@ -268,25 +314,28 @@
             border-radius: 20px;
             width: 90%;
             max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
 
         .modal-content h3 {
             margin-bottom: 20px;
             color: #333;
+            font-size: 20px;
         }
 
         .modal-content input {
             width: 100%;
-            padding: 12px;
+            padding: 12px 15px;
             border: 2px solid #e9ecef;
             border-radius: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-size: 14px;
+            transition: all 0.3s;
         }
 
         .modal-content input:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #4ecdc4;
         }
 
         .modal-buttons {
@@ -296,7 +345,7 @@
         }
 
         .modal-btn {
-            padding: 10px 20px;
+            padding: 10px 25px;
             border: none;
             border-radius: 10px;
             cursor: pointer;
@@ -305,12 +354,13 @@
         }
 
         .modal-btn.save {
-            background: #667eea;
+            background: #4ecdc4;
             color: white;
         }
 
         .modal-btn.save:hover {
-            background: #5a67d8;
+            background: #45b7b0;
+            transform: translateY(-2px);
         }
 
         .modal-btn.cancel {
@@ -321,16 +371,49 @@
         .modal-btn.cancel:hover {
             background: #dee2e6;
         }
+
+        /* Страница приветствия */
+        .welcome-page {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .welcome-page h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .welcome-page p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
     <div class="browser-container">
+        <!-- Шапка с названием TUBUS -->
+        <div class="browser-header">
+            <div class="browser-logo">
+                <h1>🔄 TUBUS</h1>
+                <span>beta</span>
+            </div>
+        </div>
+
         <!-- Панель инструментов -->
         <div class="toolbar">
             <div class="nav-buttons">
                 <button class="nav-btn" onclick="goBack()" id="back-btn" disabled>←</button>
                 <button class="nav-btn" onclick="goForward()" id="forward-btn" disabled>→</button>
                 <button class="nav-btn" onclick="refresh()">↻</button>
+                <button class="nav-btn" onclick="goHome()">🏠</button>
             </div>
             
             <div class="address-bar">
@@ -346,25 +429,32 @@
 
         <!-- Панель закладок -->
         <div class="bookmarks-bar" id="bookmarks-bar">
-            <div class="bookmark google" onclick="loadUrl('https://www.google.com')">
-                <span class="bookmark-icon">G</span>
+            <div class="bookmark google" onclick="openInNewTab('https://www.google.com')">
+                <span class="bookmark-icon">🔍</span>
                 <span>Google</span>
             </div>
-            <div class="bookmark yandex" onclick="loadUrl('https://yandex.ru')">
-                <span class="bookmark-icon">Я</span>
+            <div class="bookmark yandex" onclick="openInNewTab('https://yandex.ru')">
+                <span class="bookmark-icon">🔍</span>
                 <span>Яндекс</span>
             </div>
             <button class="add-bookmark" onclick="showBookmarkModal()">+ Добавить закладку</button>
         </div>
 
         <!-- Область просмотра -->
-        <div class="browser-view">
-            <iframe id="browser-frame" src="about:blank" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-top-navigation"></iframe>
+        <div class="browser-view" id="browser-view">
+            <!-- Вместо iframe используем открытие в новой вкладке -->
+            <div class="welcome-page">
+                <h2>Добро пожаловать в TUBUS! 👋</h2>
+                <p>Введите адрес сайта в адресную строку или воспользуйтесь поиском</p>
+                <p style="margin-top: 20px; font-size: 14px;">Сайты будут открываться в новой вкладке (из-за ограничений безопасности)</p>
+            </div>
         </div>
 
         <!-- Статус бар -->
         <div class="status-bar">
-            <span id="current-url"></span>
+            <div class="status-left">
+                <span id="current-url">Готов к работе</span>
+            </div>
             <span class="loading" id="loading">Загрузка...</span>
         </div>
     </div>
@@ -372,9 +462,9 @@
     <!-- Модальное окно для добавления закладки -->
     <div class="modal" id="bookmark-modal">
         <div class="modal-content">
-            <h3>Добавить закладку</h3>
-            <input type="text" id="bookmark-name" placeholder="Название">
-            <input type="text" id="bookmark-url" placeholder="URL">
+            <h3>➕ Добавить закладку</h3>
+            <input type="text" id="bookmark-name" placeholder="Название сайта" autocomplete="off">
+            <input type="text" id="bookmark-url" placeholder="URL (например, github.com)" autocomplete="off">
             <div class="modal-buttons">
                 <button class="modal-btn cancel" onclick="hideBookmarkModal()">Отмена</button>
                 <button class="modal-btn save" onclick="addBookmark()">Сохранить</button>
@@ -391,7 +481,7 @@
         let currentIndex = -1;
         
         // Закладки
-        let bookmarks = [
+        let bookmarks = JSON.parse(localStorage.getItem('tubus-bookmarks')) || [
             { name: 'Google', url: 'https://www.google.com', color: 'google' },
             { name: 'Яндекс', url: 'https://yandex.ru', color: 'yandex' }
         ];
@@ -399,8 +489,13 @@
         // Инициализация
         window.onload = function() {
             updateBookmarksBar();
-            loadUrl('https://www.google.com');
+            updateStatus('TUBUS готов к работе');
         };
+
+        // Обновление статуса
+        function updateStatus(message) {
+            document.getElementById('current-url').textContent = message;
+        }
 
         // Установка поисковой системы
         function setSearchEngine(engine) {
@@ -409,6 +504,24 @@
                 btn.classList.remove('active');
             });
             document.querySelector(`.search-engine.${engine}`).classList.add('active');
+            updateStatus(`Поисковая система: ${engine === 'google' ? 'Google' : 'Яндекс'}`);
+        }
+
+        // Открытие в новой вкладке (решение проблемы с iframe)
+        function openInNewTab(url) {
+            if (!url) return;
+            
+            // Добавляем протокол если его нет
+            if (!url.startsWith('http')) {
+                url = 'https://' + url;
+            }
+            
+            window.open(url, '_blank');
+            
+            // Добавляем в историю
+            addToHistory(url);
+            document.getElementById('url-input').value = url;
+            updateStatus(`Открыто: ${url}`);
         }
 
         // Навигация
@@ -419,71 +532,48 @@
             let url;
             
             // Проверяем, является ли ввод URL
-            if (input.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)) {
+            const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i;
+            if (urlPattern.test(input)) {
                 url = input.startsWith('http') ? input : 'https://' + input;
+                openInNewTab(url);
             } else {
                 // Если не URL, выполняем поиск
-                url = getSearchUrl(input);
+                performSearch(input);
             }
-            
-            loadUrl(url);
         }
 
-        // Получение URL поиска в зависимости от выбранной системы
-        function getSearchUrl(query) {
+        // Выполнение поиска
+        function performSearch(query) {
             const encodedQuery = encodeURIComponent(query);
+            let searchUrl;
+            
             if (currentSearchEngine === 'google') {
-                return `https://www.google.com/search?q=${encodedQuery}`;
+                searchUrl = `https://www.google.com/search?q=${encodedQuery}`;
             } else {
-                return `https://yandex.ru/search/?text=${encodedQuery}`;
+                searchUrl = `https://yandex.ru/search/?text=${encodedQuery}`;
             }
+            
+            openInNewTab(searchUrl);
+            updateStatus(`Поиск: ${query}`);
         }
 
-        // Загрузка URL
-        function loadUrl(url) {
-            const iframe = document.getElementById('browser-frame');
-            const loading = document.getElementById('loading');
-            const urlInput = document.getElementById('url-input');
-            const currentUrlSpan = document.getElementById('current-url');
-            
-            loading.classList.add('active');
-            
-            iframe.src = url;
-            urlInput.value = url;
-            currentUrlSpan.textContent = url;
-            
-            // Добавляем в историю
+        // Добавление в историю
+        function addToHistory(url) {
             if (currentIndex < history.length - 1) {
                 history = history.slice(0, currentIndex + 1);
             }
             history.push(url);
             currentIndex = history.length - 1;
-            
             updateNavButtons();
-            
-            // Обработчик загрузки iframe
-            iframe.onload = function() {
-                loading.classList.remove('active');
-                try {
-                    const iframeUrl = iframe.contentWindow.location.href;
-                    urlInput.value = iframeUrl;
-                    currentUrlSpan.textContent = iframeUrl;
-                } catch(e) {
-                    // Игнорируем ошибки кросс-домена
-                }
-            };
-            
-            iframe.onerror = function() {
-                loading.classList.remove('active');
-                alert('Ошибка загрузки страницы');
-            };
         }
 
         // Навигация назад
         function goBack() {
             if (currentIndex > 0) {
                 currentIndex--;
-                document.getElementById('browser-frame').src = history[currentIndex];
+                const url = history[currentIndex];
+                openInNewTab(url);
+                document.getElementById('url-input').value = url;
                 updateNavButtons();
             }
         }
@@ -492,15 +582,25 @@
         function goForward() {
             if (currentIndex < history.length - 1) {
                 currentIndex++;
-                document.getElementById('browser-frame').src = history[currentIndex];
+                const url = history[currentIndex];
+                openInNewTab(url);
+                document.getElementById('url-input').value = url;
                 updateNavButtons();
             }
         }
 
         // Обновление страницы
         function refresh() {
-            const iframe = document.getElementById('browser-frame');
-            iframe.src = iframe.src;
+            if (history[currentIndex]) {
+                openInNewTab(history[currentIndex]);
+            }
+        }
+
+        // Домой
+        function goHome() {
+            document.getElementById('url-input').value = '';
+            updateStatus('Главная страница');
+            // Здесь можно открыть стартовую страницу
         }
 
         // Обновление состояния кнопок навигации
@@ -527,7 +627,7 @@
             let url = document.getElementById('bookmark-url').value.trim();
             
             if (!name || !url) {
-                alert('Заполните все поля');
+                alert('Пожалуйста, заполните все поля');
                 return;
             }
             
@@ -535,53 +635,40 @@
                 url = 'https://' + url;
             }
             
+            // Проверяем, не существует ли уже такая закладка
+            const exists = bookmarks.some(b => b.url === url);
+            if (exists) {
+                alert('Эта закладка уже существует');
+                return;
+            }
+            
             bookmarks.push({ name, url, color: 'custom' });
+            localStorage.setItem('tubus-bookmarks', JSON.stringify(bookmarks));
             updateBookmarksBar();
             hideBookmarkModal();
+            updateStatus(`Закладка "${name}" добавлена`);
         }
 
         // Обновить панель закладок
         function updateBookmarksBar() {
             const bar = document.getElementById('bookmarks-bar');
-            // Очищаем панель, оставляя только кнопку добавления
+            
+            // Очищаем панель, оставляя только первые две и кнопку добавления
             while (bar.children.length > 3) {
                 bar.removeChild(bar.lastChild);
             }
             
-            // Добавляем закладки
+            // Добавляем остальные закладки
             bookmarks.forEach((bookmark, index) => {
-                if (index < 2) return; // Пропускаем первые две (стандартные)
+                if (index < 2) return; // Пропускаем первые две (Google и Яндекс)
                 
                 const bookmarkEl = document.createElement('div');
-                bookmarkEl.className = `bookmark ${bookmark.color}`;
-                bookmarkEl.onclick = () => loadUrl(bookmark.url);
+                bookmarkEl.className = `bookmark ${bookmark.color || 'custom'}`;
+                bookmarkEl.onclick = () => openInNewTab(bookmark.url);
                 bookmarkEl.innerHTML = `
-                    <span class="bookmark-icon">★</span>
+                    <span class="bookmark-icon">⭐</span>
                     <span>${bookmark.name}</span>
                 `;
                 
-                // Вставляем перед кнопкой добавления
-                bar.insertBefore(bookmarkEl, bar.lastChild);
-            });
-        }
-
-        // Обработка нажатия Enter в поле ввода
-        document.getElementById('url-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                navigate();
-            }
-        });
-
-        // Предотвращаем навигацию в iframe
-        document.getElementById('browser-frame').addEventListener('load', function() {
-            try {
-                const url = this.contentWindow.location.href;
-                document.getElementById('url-input').value = url;
-                document.getElementById('current-url').textContent = url;
-            } catch(e) {
-                // Игнорируем ошибки кросс-домена
-            }
-        });
-    </script>
-</body>
-</html>
+                // Добавляем перед кнопкой "Добавить закладку"
+ 
