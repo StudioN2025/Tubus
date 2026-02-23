@@ -73,7 +73,7 @@
             border-radius: 16px;
         }
 
-        /* Компактная панель инструментов */
+        /* Панель инструментов */
         .toolbar {
             background: #f8f9fa;
             padding: 8px 10px;
@@ -118,7 +118,7 @@
             pointer-events: none;
         }
 
-        /* Компактная адресная строка */
+        /* Адресная строка */
         .address-bar {
             flex: 1;
             display: flex;
@@ -164,7 +164,7 @@
             transform: scale(1.1);
         }
 
-        /* Компактные поисковые системы */
+        /* Поисковые системы */
         .search-engines {
             display: flex;
             gap: 4px;
@@ -172,6 +172,8 @@
             padding: 3px;
             border-radius: 20px;
             border: 1px solid #dee2e6;
+            width: fit-content;
+            margin: 4px 10px;
         }
 
         .search-engine {
@@ -208,7 +210,7 @@
             box-shadow: 0 0 0 2px rgba(78, 205, 196, 0.5);
         }
 
-        /* Компактная панель закладок */
+        /* Панель закладок */
         .bookmarks-bar {
             background: white;
             padding: 6px 10px;
@@ -295,7 +297,7 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* Компактный статус бар */
+        /* Статус бар */
         .status-bar {
             background: #f8f9fa;
             padding: 4px 12px;
@@ -321,7 +323,7 @@
             display: inline;
         }
 
-        /* Модальное окно для мобильных */
+        /* Модальное окно */
         .modal {
             display: none;
             position: fixed;
@@ -411,7 +413,7 @@
             background: #dee2e6;
         }
 
-        /* Страница приветствия для мобильных */
+        /* Страница приветствия */
         .welcome-page {
             height: 100%;
             min-height: 400px;
@@ -446,7 +448,7 @@
             border-radius: 30px;
         }
 
-        /* Медиа-запросы для очень маленьких экранов */
+        /* Медиа-запросы */
         @media (max-width: 380px) {
             .toolbar {
                 padding: 6px 8px;
@@ -482,7 +484,6 @@
             }
         }
 
-        /* Для планшетов */
         @media (min-width: 768px) {
             .browser-container {
                 height: 95vh;
@@ -508,16 +509,16 @@
 </head>
 <body>
     <div class="browser-container">
-        <!-- Компактная шапка с временем -->
+        <!-- Шапка -->
         <div class="browser-header">
             <div class="browser-logo">
                 <h1>🔄 TUBUS</h1>
-                <span>mobile</span>
+                <span>v2.0</span>
             </div>
             <div class="header-time" id="current-time"></div>
         </div>
 
-        <!-- Компактная панель инструментов -->
+        <!-- Панель инструментов -->
         <div class="toolbar">
             <div class="nav-buttons">
                 <button class="nav-btn" onclick="goBack()" id="back-btn" disabled>←</button>
@@ -527,44 +528,42 @@
             </div>
             
             <div class="address-bar">
-                <input type="text" id="url-input" placeholder="Поиск или адрес...">
-                <button id="go-btn" onclick="navigate()">→</button>
+                <input type="text" id="url-input" placeholder="Введите запрос или адрес...">
+                <button id="go-btn" onclick="navigate()">🔍</button>
             </div>
         </div>
 
-        <!-- Поисковые системы (вынесены отдельно для компактности) -->
-        <div style="padding: 4px 10px; background: #f8f9fa; border-bottom: 1px solid #dee2e6;">
-            <div class="search-engines" style="width: fit-content;">
-                <button class="search-engine google active" onclick="setSearchEngine('google')">Google</button>
-                <button class="search-engine yandex" onclick="setSearchEngine('yandex')">Яндекс</button>
-            </div>
+        <!-- Поисковые системы -->
+        <div class="search-engines">
+            <button class="search-engine google active" onclick="setSearchEngine('google')">Google</button>
+            <button class="search-engine yandex" onclick="setSearchEngine('yandex')">Яндекс</button>
         </div>
 
-        <!-- Компактная панель закладок -->
+        <!-- Панель закладок -->
         <div class="bookmarks-bar" id="bookmarks-bar">
-            <div class="bookmark google" onclick="openInNewTab('https://www.google.com')">
+            <div class="bookmark google" onclick="openSite('https://www.google.com')">
                 <span class="bookmark-icon">G</span>
                 <span>Google</span>
             </div>
-            <div class="bookmark yandex" onclick="openInNewTab('https://yandex.ru')">
+            <div class="bookmark yandex" onclick="openSite('https://yandex.ru')">
                 <span class="bookmark-icon">Я</span>
                 <span>Яндекс</span>
             </div>
             <button class="add-bookmark" onclick="showBookmarkModal()">
-                <span>+</span> <span class="bookmark-text">Добавить</span>
+                <span>+</span> <span>Добавить</span>
             </button>
         </div>
 
         <!-- Область просмотра -->
         <div class="browser-view" id="browser-view">
             <div class="welcome-page">
-                <h2>👋 TUBUS</h2>
-                <p>Введите адрес сайта или поисковый запрос</p>
-                <p class="hint">⬆️ Сайты открываются в новой вкладке</p>
+                <h2>🔍 TUBUS</h2>
+                <p>Введите поисковый запрос или адрес сайта</p>
+                <p class="hint" id="search-hint">Сейчас поиск: <span id="current-search-name">Google</span></p>
             </div>
         </div>
 
-        <!-- Компактный статус бар -->
+        <!-- Статус бар -->
         <div class="status-bar">
             <div class="status-left">
                 <span id="current-url">Готов к работе</span>
@@ -574,50 +573,48 @@
         </div>
     </div>
 
-    <!-- Модальное окно -->
+    <!-- Модальное окно для закладок -->
     <div class="modal" id="bookmark-modal">
         <div class="modal-content">
             <h3>➕ Новая закладка</h3>
             <input type="text" id="bookmark-name" placeholder="Название" autocomplete="off">
-            <input type="text" id="bookmark-url" placeholder="Ссылка (site.com)" autocomplete="off">
+            <input type="text" id="bookmark-url" placeholder="Адрес сайта" autocomplete="off">
             <div class="modal-buttons">
                 <button class="modal-btn cancel" onclick="hideBookmarkModal()">Отмена</button>
-                <button class="modal-btn save" onclick="addBookmark()">OK</button>
+                <button class="modal-btn save" onclick="addBookmark()">Сохранить</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Текущая поисковая система
+        // ========== НАСТРОЙКИ ==========
         let currentSearchEngine = 'google';
-        
-        // История
         let history = [];
         let currentIndex = -1;
         
-        // Закладки
+        // Закладки по умолчанию
         let bookmarks = JSON.parse(localStorage.getItem('tubus-bookmarks')) || [
-            { name: 'Google', url: 'https://www.google.com', color: 'google' },
-            { name: 'Яндекс', url: 'https://yandex.ru', color: 'yandex' }
+            { name: 'Google', url: 'https://www.google.com' },
+            { name: 'Яндекс', url: 'https://yandex.ru' }
         ];
 
-        // Обновление времени
+        // ========== ВРЕМЯ ==========
         function updateTime() {
             const now = new Date();
             const timeStr = now.toLocaleTimeString('ru-RU', { 
                 hour: '2-digit', 
-                minute: '2-digit',
-                hour12: false 
+                minute: '2-digit'
             });
             document.getElementById('current-time').textContent = timeStr;
         }
 
-        // Инициализация
+        // ========== ИНИЦИАЛИЗАЦИЯ ==========
         window.onload = function() {
-            updateBookmarksBar();
-            updateStatus('TUBUS mobile');
             updateTime();
-            setInterval(updateTime, 60000); // Обновляем время каждую минуту
+            setInterval(updateTime, 1000);
+            updateBookmarksBar();
+            updateStatus('TUBUS готов');
+            updateSearchHint();
             
             // Проверка соединения
             window.addEventListener('online', () => {
@@ -628,76 +625,86 @@
             });
         };
 
-        function updateStatus(message) {
-            document.getElementById('current-url').textContent = message;
-        }
-
+        // ========== ПОИСК ==========
         function setSearchEngine(engine) {
             currentSearchEngine = engine;
+            
+            // Обновляем активную кнопку
             document.querySelectorAll('.search-engine').forEach(btn => {
                 btn.classList.remove('active');
             });
             document.querySelector(`.search-engine.${engine}`).classList.add('active');
+            
+            // Обновляем подсказку
+            updateSearchHint();
             updateStatus(`Поиск: ${engine === 'google' ? 'Google' : 'Яндекс'}`);
         }
 
-        function openInNewTab(url) {
-            if (!url) return;
-            
-            if (!url.startsWith('http')) {
-                url = 'https://' + url;
+        function updateSearchHint() {
+            const hintSpan = document.getElementById('current-search-name');
+            if (hintSpan) {
+                hintSpan.textContent = currentSearchEngine === 'google' ? 'Google' : 'Яндекс';
             }
-            
-            window.open(url, '_blank');
-            
-            addToHistory(url);
-            document.getElementById('url-input').value = url;
-            updateStatus(url.substring(0, 40) + (url.length > 40 ? '...' : ''));
-            
-            // Показываем индикатор загрузки
-            document.getElementById('loading').classList.add('active');
-            setTimeout(() => {
-                document.getElementById('loading').classList.remove('active');
-            }, 1000);
         }
 
+        // ========== НАВИГАЦИЯ ==========
         function navigate() {
             const input = document.getElementById('url-input').value.trim();
-            if (!input) return;
-
-            const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i;
             
-            if (urlPattern.test(input)) {
-                let url = input.startsWith('http') ? input : 'https://' + input;
-                openInNewTab(url);
+            if (!input) {
+                alert('Введите запрос или адрес сайта');
+                return;
+            }
+
+            // Показываем загрузку
+            showLoading();
+
+            // Проверяем, является ли ввод URL-адресом
+            const isURL = input.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i) || 
+                         input.match(/^([\da-z\.-]+)\.([a-z\.]{2,6})$/i);
+            
+            if (isURL) {
+                // Это URL
+                let url = input;
+                if (!url.startsWith('http')) {
+                    url = 'https://' + url;
+                }
+                openSite(url);
             } else {
+                // Это поисковый запрос - ИСПРАВЛЕНО!
                 performSearch(input);
             }
             
-            // Скрываем клавиатуру на мобильных
+            // Прячем клавиатуру на мобильных
             document.getElementById('url-input').blur();
         }
 
         function performSearch(query) {
+            // КОДИРУЕМ ЗАПРОС ПРАВИЛЬНО
             const encodedQuery = encodeURIComponent(query);
             let searchUrl;
             
             if (currentSearchEngine === 'google') {
+                // Google поиск
                 searchUrl = `https://www.google.com/search?q=${encodedQuery}`;
             } else {
+                // Яндекс поиск
                 searchUrl = `https://yandex.ru/search/?text=${encodedQuery}`;
             }
             
-            openInNewTab(searchUrl);
+            console.log('Поиск:', searchUrl); // Для отладки
+            openSite(searchUrl);
+            updateStatus(`Поиск: "${query}"`);
         }
 
-        function addToHistory(url) {
-            if (currentIndex < history.length - 1) {
-                history = history.slice(0, currentIndex + 1);
-            }
-            history.push(url);
-            currentIndex = history.length - 1;
-            updateNavButtons();
-        }
-
-        functio
+        function openSite(url) {
+            if (!url) return;
+            
+            // Открываем в новой вкладке
+            window.open(url, '_blank');
+            
+            // Добавляем в историю
+            addToHistory(url);
+            
+            // Обновляем адресную строку
+            document.getElementById('url-input').value =
